@@ -3,6 +3,10 @@ package jdbctests;
 import org.testng.annotations.Test;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Jdbc_example {
     //connection string
@@ -96,6 +100,63 @@ public class Jdbc_example {
         resultSet.close();
         statement.close();
         connection.close();
+    }
+
+    @Test
+    public void testMap() throws SQLException {
+
+        Connection connection = DriverManager.getConnection(dbUrl,dbUsername,dbPassword);
+        Statement statement=connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+        ResultSet resultSet = statement.executeQuery("select * from employees");
+
+
+        while (resultSet.next()){
+            System.out.println("Id: " +
+                    resultSet.getString(1) + "--" +
+                    resultSet.getString(2) + "--" +
+                    resultSet.getString(3) + "--" +
+                    resultSet.getString("salary"));
+        }
+
+        resultSet.beforeFirst();
+        List<Map<String, String>> resultList=new ArrayList<Map<String, String>>();
+
+        while (resultSet.next()){
+            Map<String,String> newMap=new HashMap<String, String>();
+            newMap.put("Id",resultSet.getString(1));
+            newMap.put("Name",resultSet.getString(2));
+            newMap.put("Last_Name",resultSet.getString(3));
+            newMap.put("Salary",resultSet.getString("salary"));
+            resultList.add(newMap);
+        }
+
+        System.out.println("resultMap = " + resultList);
+        System.out.println("resultMap.size() = " + resultList.size());
+
+
+        resultSet.beforeFirst();
+
+        Map<String,Map<String, Object>> resultMap=new HashMap<String, Map<String, Object>>();
+        ResultSetMetaData resultSetMetaData=resultSet.getMetaData();
+        while (resultSet.next()){
+            Map<String,Object> newMap=new HashMap<String, Object>();
+            for(int i=1; i<=resultSetMetaData.getColumnCount(); i++){
+                newMap.put(resultSetMetaData.getColumnName(i),resultSet.getString(i));
+            }
+            resultMap.put(resultSet.getString(1),newMap);
+        }
+
+        System.out.println("resultMap = " + resultMap);
+        System.out.println("resultMap.size() = " + resultMap.size());
+
+
+        //close connection
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+
+
     }
 
 }
