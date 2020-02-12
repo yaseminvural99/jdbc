@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import utilities.ConfigurationReader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class SpartanTestWithParameters {
 
     @BeforeClass
     public void setUpClass(){
-        RestAssured.baseURI="http://3.85.62.235:8000/api/";
+        RestAssured.baseURI= ConfigurationReader.get("SpartanUrl");
     }
 
     @Test
@@ -83,6 +84,18 @@ public class SpartanTestWithParameters {
         assertTrue(response.body().asString().contains("Spartan Not Found"));
     }
 
+
+    /*
+    Given accept type is Json
+    And query parameter values are :
+    gender|Female
+    nameContains|e
+    When user sends GET request to /api/spartans/search
+    Then response status code should be 200
+    And response content-type: application/json;charset=UTF-8
+    And "Female" should be in response payload
+    And "Janette" should be in response payload
+     */
     @Test
     public void PositiveQueryParamTest(){
 
@@ -97,7 +110,17 @@ public class SpartanTestWithParameters {
     }
 
 
-
+    /*
+    Given accept type is Json
+    And query parameter values are :
+    gender|Female
+    nameContains|e
+    When user sends GET request to /api/spartans/search
+    Then response status code should be 200
+    And response content-type: application/json;charset=UTF-8
+    And "Female" should be in response payload
+    And "Janette" should be in response payload
+     */
     @Test
     public void PositiveQueryParamTest02(){
 
@@ -114,6 +137,18 @@ public class SpartanTestWithParameters {
         assertTrue(response.body().asString().contains("Janette"));
     }
 
+    /*
+    Given accept type is Json
+    And query parameter values are :
+    gender|Female
+    nameContains|e
+    When user sends GET request to /api/spartans/search
+    Then response status code should be 200
+    And response content-type: application/json;charset=UTF-8
+    And "Female" should be in response payload
+    And "Janette" should be in response payload
+    ((((with map))))
+     */
     @Test
     public void PositiveQueryParamTest03(){
 
