@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import utilities.ConfigurationReader;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
@@ -59,5 +60,51 @@ public class SpartanTestWithPath {
          assertEquals(firstName,"Lorenza");
          assertEquals(spartanGender,"Female");
          assertEquals(phone,3312820936L);
+     }
+
+     @Test
+    public void getAllSpartansWithPath(){
+         //request
+         Response response = get("/spartans");
+
+         assertEquals(response.statusCode(),200);
+
+         //print the first id
+         int firstId = response.path("id[1]");
+         String firstName=response.path("name[1]");
+         String spartanGender=response.path("gender[1]");
+         long phone=response.path("phone[1]");
+
+         System.out.println("firstId = " + firstId);
+         System.out.println("firstName = " + firstName);
+         System.out.println("spartanGender = " + spartanGender);
+         System.out.println("phone = " + phone);
+         System.out.println("******************************************");
+
+         //get last name
+         int lastId = response.path("id[-1]");
+         String lastFirstName=response.path("name[-1]");
+         String lastspartanGender=response.path("gender[-1]");
+         Integer lastphone=response.path("phone[-1]");
+
+         System.out.println("lastId = " + lastId);
+         System.out.println("lastFirstName = " + lastFirstName);
+         System.out.println("lastspartanGender = " + lastspartanGender);
+         System.out.println("lastphone = " + lastphone);
+         System.out.println("******************************************");
+
+
+         //get all firstnames and print out
+         List<String> names =response.path("name");
+
+         System.out.println("names.size() = " + names.size());
+
+         List<Object> phones =response.path("phone");
+
+         for (Object phn :phones ) {
+             System.out.println("phone = " + phn);
+         }
+
+
      }
 }
