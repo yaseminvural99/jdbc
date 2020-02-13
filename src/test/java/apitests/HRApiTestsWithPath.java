@@ -16,7 +16,7 @@ public class HRApiTestsWithPath {
 
     @BeforeClass
     public void setUpClass(){
-        RestAssured.baseURI = ConfigurationReader.get("HrUrl");
+        RestAssured.baseURI = ConfigurationReader.get("HrApiUrl");
     }
 
     @Test

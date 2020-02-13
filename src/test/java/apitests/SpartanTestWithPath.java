@@ -18,7 +18,7 @@ public class SpartanTestWithPath {
 
     @BeforeClass
     public void setUpClass(){
-        RestAssured.baseURI= ConfigurationReader.get("SpartanUrl");
+        RestAssured.baseURI= ConfigurationReader.get("SpartanApiUrl");
     }
 
         /*

@@ -15,7 +15,7 @@ public class HRApiTestWithJsonPath {
 
     @BeforeClass
     public void setUpClass(){
-        baseURI = ConfigurationReader.get("HrUrl");
+        baseURI = ConfigurationReader.get("HrApiUrl");
     }
 
     @Test
