@@ -68,4 +68,16 @@ public class Spartan {
         this.phone = phone;
     }
 
+    public String getJsonAsStringForPost(){
+        String json="{" +
+                        "\"name\":" + "\"" + this.name + "\"," +
+                        "\"gender\":" + "\"" + this.gender + "\"," +
+                        "\"phone\":" + this.phone+
+                    "}";
+
+        return json;
+    }
+
+
+
 }
